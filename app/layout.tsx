@@ -5,8 +5,9 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
 import { ThemeProvider } from "@/components/theme-provider";
 import Navbar from "./(browse)/_components/Navbar";
-import Sidebar from "./(browse)/_components/Sidebar";
+import Sidebar, { SidebarSkeleton } from "./(browse)/_components/Sidebar";
 import Container from "./(browse)/_components/Container";
+import { Suspense } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -31,7 +32,9 @@ export default function RootLayout({
           >
             <Navbar />
             <div className="flex h-full pt-20">
-              <Sidebar />
+              <Suspense fallback={<SidebarSkeleton />}>
+                <Sidebar />
+              </Suspense>:
               <Container>
                 {children}
               </Container>
