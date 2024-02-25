@@ -8,6 +8,7 @@ import Navbar from "./(browse)/_components/Navbar";
 import Sidebar, { SidebarSkeleton } from "./(browse)/_components/Sidebar";
 import Container from "./(browse)/_components/Container";
 import { Suspense } from "react";
+import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,6 +31,7 @@ export default function RootLayout({
             forcedTheme="dark"
             storageKey="streameo-theme"
           >
+            <Toaster theme="light" position="bottom-center"/>
             <Navbar />
             <div className="flex h-full pt-20">
               <Suspense fallback={<SidebarSkeleton />}>
