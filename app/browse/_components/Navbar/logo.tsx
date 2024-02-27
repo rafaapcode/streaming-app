@@ -10,7 +10,7 @@ const font = Poppins({
 
 export default function Logo() {
     return (
-        <Link href="/">
+        <Link href="/browse/home">
             <div className="flex items-center gap-x-4 hover:opacity-75 transition">
                 <div className="bg-white rounded-full p-1 mr-12 shrink-0 lg:mr-0 lg:shrink">
                     <Image src="/app-logo.svg" alt="Streameo logo" height={32} width={32} />

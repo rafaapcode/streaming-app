@@ -26,21 +26,13 @@ export default function RootLayout({
     <ClerkProvider appearance={{ baseTheme: dark }}>
       <html lang="en">
         <body className={inter.className}>
-          <ThemeProvider
+        <ThemeProvider
             attribute="class"
             forcedTheme="dark"
-            storageKey="streameo-theme"
+            storageKey="gamehub-theme"
           >
-            <Toaster theme="light" position="bottom-center"/>
-            <Navbar />
-            <div className="flex h-full pt-20">
-              <Suspense fallback={<SidebarSkeleton />}>
-                <Sidebar />
-              </Suspense>:
-              <Container>
-                {children}
-              </Container>
-            </div>
+            <Toaster theme="light" position="bottom-center" />
+            {children}
           </ThemeProvider>
         </body>
       </html>
