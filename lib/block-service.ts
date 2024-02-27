@@ -34,7 +34,7 @@ export const isBlockedByUser = async (id: string) => {
 };
 
 
-export const blokUser = async (id: string) => {
+export const blockUser = async (id: string) => {
     const self = await getSelf();
 
     if (self.id === id) {

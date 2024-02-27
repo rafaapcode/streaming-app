@@ -1,5 +1,6 @@
 "use client";
 
+import { onBlock, onUnblock } from "@/actions/block";
 import { onFollow, onUnfollow } from "@/actions/follow";
 import { Button } from "@/components/ui/button";
 import { useTransition } from "react";
@@ -10,7 +11,7 @@ interface ActionsProps {
     userId: string;
 }
 
-export const Actions = ({ isFollowing, userId }: ActionsProps) => {
+export const Actions = ({  isFollowing, userId }: ActionsProps) => {
     const [isPending, startTransition] = useTransition();
 
     const handleFollow = () => {
@@ -31,17 +32,47 @@ export const Actions = ({ isFollowing, userId }: ActionsProps) => {
 
 
     const onClick = () => {
-        if(isFollowing) {
+        if (isFollowing) {
             handleUnfollow();
         } else {
             handleFollow();
         }
     };
 
+    const handleBlock = () => {
+        startTransition(() => {
+            onBlock(userId)
+                .then((data) => toast.success(`Blocked the user ${data.blocked.username}`))
+                .catch(() => toast.error("Algo deu errado"))
+        });
+    };
+
+    const handleUnblock = () => {
+        startTransition(() => {
+            onUnblock(userId)
+                .then((data) => toast.success(`Unblock the user ${data.blocked.username}`))
+                .catch(() => toast.error("Algo deu errado"))
+        });
+    };
+
+
+    // const handleClick = () => {
+    //     if (isBlocked) {
+    //         handleBlock();
+    //     } else {
+    //         handleUnblock();
+    //     }
+    // };
 
     return (
-        <Button disabled={isPending} onClick={onClick} variant="primary">
-            {isFollowing ? "Deixar de Seguir" : "Seguir"}
-        </Button>
+        <>
+            <Button disabled={isPending} onClick={onClick} variant="primary">
+                {isFollowing ? "Deixar de Seguir" : "Seguir"}
+            </Button>
+
+            <Button onClick={handleUnblock} disabled={isPending}>
+                Block
+            </Button>
+        </>
     )
 };
