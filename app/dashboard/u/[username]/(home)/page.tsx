@@ -1,7 +1,7 @@
 export default function CreatorPage() {
     return (
         <div>
-            Page
+            Creator Page
         </div>
     )
 };
