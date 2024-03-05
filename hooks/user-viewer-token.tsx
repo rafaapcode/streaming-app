@@ -3,10 +3,10 @@
 import { toast } from "sonner";
 import { useEffect, useState } from "react";
 import { JwtPayload, jwtDecode } from "jwt-decode";
-
+import { LiveKitRoom } from "@livekit/components-react";
 import { createViewerToken } from "@/actions/token";
 
-export const UserViewerToken = ({ hostIdentity }: { hostIdentity: string }) => {
+export const UserViewerToken = ({ hostIdentity, children }: { hostIdentity: string, children: React.ReactNode }) => {
   const [token, setToken] = useState("");
   const [name, setName] = useState("");
   const [identity, setIdentity] = useState("");
@@ -45,9 +45,11 @@ export const UserViewerToken = ({ hostIdentity }: { hostIdentity: string }) => {
     )
   }
 
-  return <div>
-    Permitido a assistir
-  </div>
+  return <>
+    <LiveKitRoom token={token} serverUrl={process.env.NEXT_PUBLIC_LIVEKIT_WS_URL} className="grid grid-cols-1 lg:gap-y-0 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-6 h-full">
+      {children}
+    </LiveKitRoom>
+  </>
 
 };
 
