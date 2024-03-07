@@ -53,7 +53,7 @@ export default function Chat({ hosIdentity, hostName, isChatDelay, isChatEnabled
     }
 
     return (
-        <div className="flex flex-col bg-background border-l border-b pt-0 h-[calc(100%-80px)]">
+        <div className="w-full flex flex-col bg-background border-l border-b pt-0 h-[calc(100%-80px)]">
             <ChatHeader />
             {variant === ChatVariant.CHAT && (
                 <>

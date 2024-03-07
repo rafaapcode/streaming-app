@@ -30,7 +30,7 @@ export default function Video({ hostIdentity, hostName }: VideoProps) {
     }
 
     return (
-        <div className="w-[70%] aspect-video border-b group relative">
+        <div className="w-full aspect-video border-b group relative">
             {content}
         </div>
     )
