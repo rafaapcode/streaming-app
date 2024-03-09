@@ -7,6 +7,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import ChatHeader from "./ChatHeader";
 import ChatForm from "./ChatForm";
+import ChatList from "./ChatList";
 
 
 interface ChatProps {
@@ -26,7 +27,8 @@ export default function Chat({ hosIdentity, hostName, isChatDelay, isChatEnabled
     const participant = useRemoteParticipant(hosIdentity);
 
     const isOnline = participant && connectionState === ConnectionState.Connected;
-    const isHidden = !isChatEnabled || !isOnline;
+    // const isHidden = isChatEnabled || isOnline;
+    const isHidden = false;
 
     const [value, setValue] = useState("");
     const { chatMessages: messages, send } = useChat();
@@ -57,6 +59,7 @@ export default function Chat({ hosIdentity, hostName, isChatDelay, isChatEnabled
             <ChatHeader />
             {variant === ChatVariant.CHAT && (
                 <>
+                    <ChatList messages={reversedMessages} isHidden={isHidden} />
                     <ChatForm onSubmit={onSubmit} value={value} onChange={onChange} isHidden={isHidden} isFollowersOnly={isChatFollowersOnly} isDelayed={isChatDelay} isFollowing={isFollowing} />
                 </>
             )}

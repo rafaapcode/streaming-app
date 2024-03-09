@@ -11,7 +11,7 @@ interface ChatFormProps {
     onSubmit: () => void;
     value: string;
     onChange: (value: string) => void;
-    isHidden: boolean;
+    isHidden: boolean | undefined;
     isFollowersOnly: boolean;
     isFollowing: boolean;
     isDelayed: boolean;
@@ -49,11 +49,11 @@ export default function ChatForm({
 
     return <form className="flex flex-col items-center gap-y-4 p-3" onSubmit={handleSubmit}>
         <div className="w-full">
-            <ChatInfo />
+            <ChatInfo isDelayed={isDelayed} isFollowersOnly={isFollowersOnly}/>
             <Input onChange={(e) => onChange(e.target.value)} value={value} disabled={isDisabled} placeholder="Mande uma mensagem" className={cn("border-white/10", isFollowersOnly && "rounded-t-none border-t-0")} />
         </div>
         <div className="ml-auto">
-            <Button type="submit" variant={"primary"} size={"sm"} disabled={false}>
+            <Button type="submit" variant={"primary"} size={"sm"} disabled={isDisabled}>
                 Chat
             </Button>
         </div>
