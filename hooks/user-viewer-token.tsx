@@ -8,6 +8,7 @@ import { createViewerToken } from "@/actions/token";
 import { cn } from "@/lib/utils";
 import { useStreamCredentials } from "@/store/stream-credentials";
 import ChatToggle from "@/components/streamPlayer/ChatToggle";
+import { StreamPlayerSkeleton } from "@/components/streamPlayer";
 
 export const UserViewerToken = ({ hostIdentity, children, collapsed }: { hostIdentity: string, children: React.ReactNode, collapsed: boolean }) => {
   const [token, setToken] = useState("");
@@ -46,11 +47,7 @@ export const UserViewerToken = ({ hostIdentity, children, collapsed }: { hostIde
   }, [hostIdentity]);
 
   if (!token || !name || !identity) {
-    return (
-      <div>
-        Você não pode assistir a transmissão
-      </div>
-    )
+    return <StreamPlayerSkeleton />
   }
 
   return <>
@@ -59,7 +56,6 @@ export const UserViewerToken = ({ hostIdentity, children, collapsed }: { hostIde
         <ChatToggle />
       </div>
     )}
-    {/* "grid grid-cols-1 lg:gap-y-0 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-6 h-full" */}
     <LiveKitRoom token={token} serverUrl={process.env.NEXT_PUBLIC_LIVEKIT_WS_URL} className={cn("flex justify-between h-full", collapsed && "lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2")}>
       {children}
     </LiveKitRoom>
