@@ -6,6 +6,7 @@ import { useChatSidebar } from "@/store/use-chat-sidebar";
 import { cn } from "@/lib/utils";
 import { useStreamCredentials } from "@/store/stream-credentials";
 import Chat, { ChatSkeleton } from "./Chat";
+import Header, { HeaderSkeleton } from "./Header";
 
 interface StreamPlayerProps {
     user: User & { stream: Stream | null }
@@ -15,12 +16,13 @@ interface StreamPlayerProps {
 
 export default function StreamPlayer({ stream, user, isFollowing }: StreamPlayerProps) {
     const { collapsed } = useChatSidebar((state) => state);
-    const name = useStreamCredentials((state) => state.name);
+    const {name, identity} = useStreamCredentials((state) => state);
 
 
     return <UserViewerToken hostIdentity={user.id} collapsed={collapsed}>
         <div className={cn("w-[80%] lg:overflow-y-auto hidden-scrollbar pb-10", collapsed && "w-[95%]")}>
             <Video hostName={user.username} hostIdentity={user.id} />
+            <Header hostName={user.username} hostIdentity={user.id} viewerIdentity={identity} imageUrl={user.imageUrl} isFollowing={isFollowing} name={stream.name}/>
         </div>
         <div className={cn("w-[calc(100%-80%)]",collapsed && "hidden")}>
             <Chat viewerName={name} hostName={user.username} hosIdentity={user.id} isFollowing={isFollowing} isChatEnabled={stream.isChatEnabled} isChatDelay={stream.isChatDelayed} isChatFollowersOnly={stream.isChatFollowersOnly}/>
@@ -30,11 +32,12 @@ export default function StreamPlayer({ stream, user, isFollowing }: StreamPlayer
 
 export const StreamPlayerSkeleton = () => {
     return (
-        <div className="grid grid-cols-1 lg:gap-y-0 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-6 h-full">
-            <div className="space-y-4 col-span-1 lg:col-span-2 xl:col-span-2 lg:overflow-y-auto hidden-scrollbar pb-10">
+        <div className="flex w-full h-full">
+            <div className="w-[80%] lg:overflow-y-auto hidden-scrollbar pb-10">
                 <VideoSkeleton />
+                <HeaderSkeleton />
             </div>
-            <div className="col-span-1 bg-background">
+            <div className="w-[calc(100%-80%)] bg-background">
                 <ChatSkeleton />
             </div>
         </div>
