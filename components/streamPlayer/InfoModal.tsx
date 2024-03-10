@@ -7,6 +7,8 @@ import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { updateStream } from "@/actions/stream";
 import { toast } from "sonner";
+import { UploadDropzone } from "@/lib/uploadThing";
+import { useRouter } from "next/navigation";
 
 interface InfoModalProsp {
     initialName: string;
@@ -15,13 +17,16 @@ interface InfoModalProsp {
 
 export default function InfoModal({ initialName, initialThumbnailUrl }: InfoModalProsp) {
     const [name, setName] = useState(initialName);
+    const [thumbnailUrl, setThumbnailUrl] = useState(initialThumbnailUrl);
     const [isPending, startTransition] = useTransition();
     const closeRef = useRef<ElementRef<"button">>(null);
+    const router = useRouter();
+
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         startTransition(() => {
-            updateStream({name: name})
+            updateStream({ name: name })
                 .then(() => {
                     toast.success("Transmissão atualizada");
                     closeRef.current?.click();
@@ -53,6 +58,26 @@ export default function InfoModal({ initialName, initialThumbnailUrl }: InfoModa
                             Nome
                         </Label>
                         <Input placeholder="Nome da Transmissão" onChange={onChange} value={name} disabled={isPending} />
+                    </div>
+                    <div className="space-y-2">
+                        <Label>
+                            Thumbnail
+                        </Label>
+                        <div className="rounded-xl border outline-dashed outline-muted">
+                            <UploadDropzone endpoint="thumbnailUploader" appearance={{
+                                label: {
+                                    color: '#FFFFFF'
+                                },
+                                allowedContent: {
+                                    color: "#FFFFFF"
+                                }
+                            }}
+                                onClientUploadComplete={(res) => {
+                                    setThumbnailUrl(res?.[0]?.url);
+                                    router.refresh();
+                                }}
+                            />
+                        </div>
                     </div>
                     <div className="flex justify-between">
                         <DialogClose ref={closeRef} asChild>
