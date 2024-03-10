@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import { useStreamCredentials } from "@/store/stream-credentials";
 import Chat, { ChatSkeleton } from "./Chat";
 import Header, { HeaderSkeleton } from "./Header";
+import Infocard from "./Infocard";
 
 interface StreamPlayerProps {
     user: User & { stream: Stream | null }
@@ -23,6 +24,7 @@ export default function StreamPlayer({ stream, user, isFollowing }: StreamPlayer
         <div className={cn("w-[80%] lg:overflow-y-auto hidden-scrollbar pb-10", collapsed && "w-[95%]")}>
             <Video hostName={user.username} hostIdentity={user.id} />
             <Header hostName={user.username} hostIdentity={user.id} viewerIdentity={identity} imageUrl={user.imageUrl} isFollowing={isFollowing} name={stream.name}/>
+            <Infocard hostIdentity={user.id} viewerIdentity={identity} name={stream.name} thumbnailUrl={stream.thumbnailUrl || ""}/>
         </div>
         <div className={cn("w-[calc(100%-80%)]",collapsed && "hidden")}>
             <Chat viewerName={name} hostName={user.username} hosIdentity={user.id} isFollowing={isFollowing} isChatEnabled={stream.isChatEnabled} isChatDelay={stream.isChatDelayed} isChatFollowersOnly={stream.isChatFollowersOnly}/>
