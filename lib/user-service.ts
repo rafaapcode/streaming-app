@@ -1,4 +1,3 @@
-import { Ephesis } from "next/font/google";
 import { db } from "./db";
 
 export const getUserByUsername = async (username: string) => {
@@ -7,7 +6,12 @@ export const getUserByUsername = async (username: string) => {
             username
         },
         include: {
-            stream: true
+            stream: true,
+            _count: {
+                select: {
+                    followedBy: true
+                }
+            }
         }
     });
 
