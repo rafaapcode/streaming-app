@@ -9,6 +9,9 @@ import { updateStream } from "@/actions/stream";
 import { toast } from "sonner";
 import { UploadDropzone } from "@/lib/uploadThing";
 import { useRouter } from "next/navigation";
+import Hint from "../Hint";
+import { Trash } from "lucide-react";
+import Image from "next/image";
 
 interface InfoModalProsp {
     initialName: string;
@@ -22,6 +25,17 @@ export default function InfoModal({ initialName, initialThumbnailUrl }: InfoModa
     const closeRef = useRef<ElementRef<"button">>(null);
     const router = useRouter();
 
+    const onRemove = () => {
+        startTransition(() => {
+            updateStream({ thumbnailUrl: null })
+                .then(() => {
+                    toast.success("Thumbnail removida");
+                    setThumbnailUrl("");
+                    closeRef.current?.click();
+                })
+                .catch(() => toast.error("Algo deu errado"))
+        });
+    };
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -63,21 +77,40 @@ export default function InfoModal({ initialName, initialThumbnailUrl }: InfoModa
                         <Label>
                             Thumbnail
                         </Label>
-                        <div className="rounded-xl border outline-dashed outline-muted">
-                            <UploadDropzone endpoint="thumbnailUploader" appearance={{
-                                label: {
-                                    color: '#FFFFFF'
-                                },
-                                allowedContent: {
-                                    color: "#FFFFFF"
-                                }
-                            }}
-                                onClientUploadComplete={(res) => {
-                                    setThumbnailUrl(res?.[0]?.url);
-                                    router.refresh();
+                        {thumbnailUrl ? (
+                            <div className="relative aspect-video rounded-xl overflow-hidden border border-white/10">
+                                <div className="absolute top-2 right-2 z-[10]">
+                                    <Hint label="Remover thumbnail" asChild side="left">
+                                        <Button type="button" disabled={isPending} onClick={onRemove} className="h-auto w-auto p-1.5">
+                                            <Trash className="h-4 w-4" />
+                                        </Button>
+                                    </Hint>
+                                </div>
+                                <Image
+                                    src={thumbnailUrl}
+                                    alt="Thumbnail"
+                                    fill
+                                    className="object-cover"
+                                />
+                            </div>
+                        ) : (
+                            <div className="rounded-xl border outline-dashed outline-muted">
+                                <UploadDropzone endpoint="thumbnailUploader" appearance={{
+                                    label: {
+                                        color: '#FFFFFF'
+                                    },
+                                    allowedContent: {
+                                        color: "#FFFFFF"
+                                    }
                                 }}
-                            />
-                        </div>
+                                    onClientUploadComplete={(res) => {
+                                        setThumbnailUrl(res?.[0]?.url);
+                                        router.refresh();
+                                    }}
+                                />
+                            </div>
+                        )}
+
                     </div>
                     <div className="flex justify-between">
                         <DialogClose ref={closeRef} asChild>
@@ -91,6 +124,6 @@ export default function InfoModal({ initialName, initialThumbnailUrl }: InfoModa
                     </div>
                 </form>
             </DialogContent>
-        </Dialog>
+        </Dialog >
     )
 }

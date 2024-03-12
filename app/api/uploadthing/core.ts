@@ -1,8 +1,6 @@
-import { metadata } from './../../layout';
 import { getSelf } from "@/lib/auth-service";
 import { db } from '@/lib/db';
 import { createUploadthing, type FileRouter } from "uploadthing/next";
-import { UploadThingError } from "uploadthing/server";
 
 const f = createUploadthing();
 
