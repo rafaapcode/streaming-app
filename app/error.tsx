@@ -1,0 +1,19 @@
+"use client";
+
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+
+export default function ErrorPage() {
+    return (
+        <div className="h-full flex flex-col space-y-4 items-center justify-center text-muted-foreground">
+            <p>
+               Algo deu errado.
+            </p>
+            <Button variant={"secondary"} asChild>
+                <Link href="/browse/home">
+                    Voltar
+                </Link>
+            </Button>
+        </div>
+    )
+};
