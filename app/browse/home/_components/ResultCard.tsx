@@ -20,19 +20,14 @@ export default function ResultCard({ data }: ResultCardProps) {
         <Link href={`/browse/${data.user.username}`}>
             <div className="h-full w-full space-y-4">
                 <Thumbnail src={data.thumbnailUrl} fallback={data.user.imageUrl} isLive={data.isLive} username={data.user.username} />
-                {data.isLive && (
-                    <div className="absolute top-2 lef-2 group-hover:translate-x-2 group-hover:-translate-y-2 transition-transform">
-                        <LiveBadge />
-                    </div>
-                )}
                 <div className="flex gap-x-3">
                     <UserAvatar username={data.user.username} imageUrl={data.user.imageUrl} isLive={data.isLive} />
                     <div className="flex flex-col text-sm overflow-hidden">
                         <p className="truncate font-semibold hover:text-blue-500">
-                            {data.user.username}
+                            {data.name}
                         </p>
                         <p className="text-muted-foreground">
-                            {data.name}
+                            {data.user.username}
                         </p>
                     </div>
                 </div>
@@ -48,8 +43,8 @@ export const ResultCardSkeleton = () => {
             <div className="flex gap-x-3">
                 <UserAvatarSkeleton />
                 <div className="flex flex-col gap-y-1">
-                    <Skeleton className="h-4 w-32"/>
-                    <Skeleton className="h-3 w-24"/>
+                    <Skeleton className="h-4 w-32" />
+                    <Skeleton className="h-3 w-24" />
                 </div>
             </div>
         </div>
