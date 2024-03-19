@@ -42,7 +42,7 @@ export const Actions = ({  isFollowing, userId }: ActionsProps) => {
     const handleBlock = () => {
         startTransition(() => {
             onBlock(userId)
-                .then((data) => toast.success(`Blocked the user ${data.blocked.username}`))
+                .then(() => toast.success(`Blocked the user`))
                 .catch(() => toast.error("Algo deu errado"))
         });
     };
@@ -54,15 +54,6 @@ export const Actions = ({  isFollowing, userId }: ActionsProps) => {
                 .catch(() => toast.error("Algo deu errado"))
         });
     };
-
-
-    // const handleClick = () => {
-    //     if (isBlocked) {
-    //         handleBlock();
-    //     } else {
-    //         handleUnblock();
-    //     }
-    // };
 
     return (
         <>
