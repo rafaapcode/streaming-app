@@ -1,11 +1,19 @@
-import { Thumbnail } from "@/components/Thumbnail";
+import { Thumbnail, ThumbnailSkeleton } from "@/components/Thumbnail";
+import { Skeleton } from "@/components/ui/skeleton";
 import VerifiedMark from "@/components/verified-mark";
-import { Stream, User } from "@prisma/client";
+import { User } from "@prisma/client";
 import { formatDistanceToNow } from "date-fns";
 import Link from "next/link";
 
 interface ResultCardProps {
-    data: Stream & { user: User };
+    data: {
+        id: string;
+        name: string;
+        thumbnailUrl: string | null;
+        isLive: boolean;
+        updatedAt: Date;
+        user: User;
+    };
 }
 
 export default function ResultCard({ data }: ResultCardProps) {
@@ -27,5 +35,20 @@ export default function ResultCard({ data }: ResultCardProps) {
                 </div>
             </div>
         </Link>
+    )
+};
+
+export const ResultCardSekeleton = () => {
+    return (
+        <div className="w-full flex gap-x-4">
+            <div className="relative h-[9rem] w-[16rem]">
+                <ThumbnailSkeleton />
+            </div>
+            <div className="space-y-2">
+                <Skeleton className="h-4 w-32" />
+                <Skeleton className="h-3 w-24" />
+                <Skeleton className="h-3 w-12" />
+            </div>
+        </div>
     )
 };

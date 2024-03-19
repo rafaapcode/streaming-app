@@ -1,5 +1,6 @@
 import { getSearch } from "@/lib/search-sevice";
-import ResultCard from "./result-card";
+import ResultCard, { ResultCardSekeleton } from "./result-card";
+import { Skeleton } from "@/components/ui/skeleton";
 
 
 interface ResultsProps {
@@ -24,6 +25,19 @@ export const Results = async ({ term }: ResultsProps) => {
             <div className="flex flex-col gap-y-4">
                 {data.map((result) => (
                     <ResultCard data={result} key={result.id}/>
+                ))}
+            </div>
+        </div>
+    )
+};
+
+export const ResultsSekeleton = () => {
+    return (
+        <div>
+            <Skeleton className="h-8 w-[290px] mb-4"/>
+            <div className="flex flex-col gap-y-4">
+                {[...Array(4)].map((_, i) => (
+                    <ResultCardSekeleton key={i}/>
                 ))}
             </div>
         </div>
