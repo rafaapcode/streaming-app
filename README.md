@@ -18,3 +18,8 @@
 - Entendimento e utilização do HOOK UseTransition
 - Utilização do LiveKit para criação de app em tempo real
 - Upload de imagens
+
+## Demonstração
+  
+https://github.com/rafaapcode/streaming-app/assets/83471941/d38a817b-08b9-4d0e-aa56-61f9e5fc7bb7
+
