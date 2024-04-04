@@ -22,6 +22,8 @@
 ## Observação
 - A geração de conexão não está funcionando por conta da limitação da minha conta do LIVEKIT, porém deixei o app mesmo assim para darem uma olhada.
 
+- https://streaming-app-beige.vercel.app/browse/home
+
 ## Demonstração
   
 https://github.com/rafaapcode/streaming-app/assets/83471941/d38a817b-08b9-4d0e-aa56-61f9e5fc7bb7
